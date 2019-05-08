@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Question</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+  <p><a href="{% url 'index' %}">Назад</a></p>
+  <h2>{{ object.text }}
+    <form method="POST" action="{% url 'delete_question' pk=object.pk %}" style="display:inline">
+    {% csrf_token %}
+    <input type="submit" value="x">
+    </form> </h2>
+  {% for answer in object.answers %}
+  <p>[{{ answer.time }}] {{ answer.text }}</p>
+  {% empty %}
+  <p>Нет ответов</p>
+  {% endfor %}
+  <form method="POST" action="{% url 'answer' %}">
+  {{ view.get_form.as_p }}
+  {% csrf_token %}
+  <input type="submit" value="Answer!">
+  </form>
+  </body>
+</html>
